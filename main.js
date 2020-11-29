@@ -34,15 +34,15 @@ function sameReply(data) {
 }
 
 /**
- * 「たくま」を送信する
+ * 「ぴよぴよ☆」を送信する
  */
-function takumaReply(data){
+function piyoReply(data){
     var postData = {
         "replyToken" : data.events[0].replyToken,
         "messages" : [
             {
                 'type':'text',
-                'text':"たくま"
+                'text':"ぴよぴよ☆"
             }
         ]　
     };
@@ -62,6 +62,63 @@ function takumaReply(data){
 }
 
 /**
+ * 「痩せろ」を送信する
+ */
+function yaseroReply(data){
+    var postData = {
+        "replyToken" : data.events[0].replyToken,
+        "messages" : [
+            {
+                'type':'text',
+                'text':"痩せろ"
+            }
+        ]　
+    };
+
+    var headers = {
+        "Content-Type" : "application/json; charset=UTF-8",
+        'Authorization': 'Bearer ' + LINE_TOKEN,
+    };
+
+    var options = {
+        "method" : "post",
+        "headers" : headers,
+        "payload" : JSON.stringify(postData)
+    };
+
+    return UrlFetchApp.fetch(url, options);
+}
+
+/**
+ * 「かっこいい」を送信する
+ */
+function kakkoiReply(data){
+    var postData = {
+        "replyToken" : data.events[0].replyToken,
+        "messages" : [
+            {
+                'type':'text',
+                'text':"かっこいい"
+            }
+        ]　
+    };
+
+    var headers = {
+        "Content-Type" : "application/json; charset=UTF-8",
+        'Authorization': 'Bearer ' + LINE_TOKEN,
+    };
+
+    var options = {
+        "method" : "post",
+        "headers" : headers,
+        "payload" : JSON.stringify(postData)
+    };
+
+    return UrlFetchApp.fetch(url, options);
+}
+
+
+/**
 * postされたときの処理
 */
 function doPost(event) {
@@ -69,8 +126,18 @@ function doPost(event) {
     var userMessage = json.events[0].message.text; //受信したメッセージ内容
     
     switch (userMessage){
-        case "やまぐち"　:
-            takumaReply(json);
+        case "ぴーすけ"　:
+            piyoReply(json);
+            break;
+        case "ぴこ":
+            piyoReply(json);
+            break;
+        case "まま":
+        case "留美子":
+            yaseroReply(json);
+            break;
+        case "まちゃぴろ":
+            kakkoiReply(json);
             break;
         default:
             sameReply(json);
