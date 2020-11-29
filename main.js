@@ -5,7 +5,7 @@ var LINE_TOKEN = "2N+vAwXBsovMpMj+lEcn+6iH6jH8Wp7Vum6H7DrZ2SipZGP97kCHhMmDlEqno8
 var url = "https://api.line.me/v2/bot/message/reply";
 
 /**
-* reply_tokenを使って同じメッセージをreplyする
+* 同じメッセージを送信する
 */
 function sameReply(data) {
     
@@ -34,11 +34,47 @@ function sameReply(data) {
 }
 
 /**
+ * 「たくま」を送信する
+ */
+function takumaReply(data){
+    var postData = {
+        "replyToken" : data.events[0].replyToken,
+        "messages" : [
+            {
+                'type':'text',
+                'text':"たくま"
+            }
+        ]　
+    };
+
+    var headers = {
+        "Content-Type" : "application/json; charset=UTF-8",
+        'Authorization': 'Bearer ' + LINE_TOKEN,
+    };
+
+    var options = {
+        "method" : "post",
+        "headers" : headers,
+        "payload" : JSON.stringify(postData)
+    };
+
+    return UrlFetchApp.fetch(url, options);
+}
+
+/**
 * postされたときの処理
 */
 function doPost(event) {
     var json = JSON.parse(event.postData.contents); //LINEからWebhook（HTTPリクエスト）で送られてきたデータ(JSON形式)を変換
     var userMessage = json.events[0].message.text; //受信したメッセージ内容
     
-    sameReply(json);
+    switch (userMessage){
+        case "やまぐち"　:
+            takumaReply(json);
+            break;
+        default:
+            sameReply(json);
+            break;
+    }
+
 }
