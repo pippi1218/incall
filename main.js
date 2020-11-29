@@ -16,9 +16,11 @@ function reply(data) {
         "messages" : [
             {
                 'type':'text',
-                'text':data.events[0].message.text,
+                'text':data.events[0].message.text
             }
         ]
+      　
+      
     };
 
     var options = {
