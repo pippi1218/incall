@@ -157,24 +157,24 @@ function goConfirm(data){
         "messages" : [
             {
                 "type": "template",
-                "altText": "this is a confirm template",
+                "altText": data.events[0].message.text + "行く？",
                 "template": {
                     "type": "confirm",
-                    "text": "行く？",
+                    "text": data.events[0].message.text + "行く？",
                     "actions": [
                         {
-                          "type": "message",
-                          "label": "はい",
-                          "text": "行く！"
+                            "type": "message",
+                            "label": "はい",
+                            "text": "行く！"
                         },
                         {
-                          "type": "message",
-                          "label": "いいえ",
-                          "text": "行かない！"
+                            "type": "message",
+                            "label": "いいえ",
+                            "text": "行かない！"
                         }
                     ]
                 }
-              }
+            }
         ]　
     };
 
