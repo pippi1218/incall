@@ -5,6 +5,36 @@ var LINE_TOKEN = "2N+vAwXBsovMpMj+lEcn+6iH6jH8Wp7Vum6H7DrZ2SipZGP97kCHhMmDlEqno8
 var url = "https://api.line.me/v2/bot/message/reply";
 
 /**
+ * コマンド一覧を表示
+ */
+function command(data) {
+    
+    var postData = {
+        "replyToken" : data.events[0].replyToken,
+        "messages" : [
+            {
+                'type':'text',
+                'text':"●コマンド一覧\nいんこーる\nこんびに\nつるは\nからおけ"
+            }
+        ]　
+    };
+
+    var headers = {
+        "Content-Type" : "application/json; charset=UTF-8",
+        'Authorization': 'Bearer ' + LINE_TOKEN,
+    };
+
+    var options = {
+        "method" : "post",
+        "headers" : headers,
+        "payload" : JSON.stringify(postData)
+    };
+
+    return UrlFetchApp.fetch(url, options);
+}
+
+
+/**
 * 同じメッセージを送信する
 */
 function sameReply(data) {
@@ -117,7 +147,11 @@ function kakkoiReply(data){
     return UrlFetchApp.fetch(url, options);
 }
 
-function goTo(data){
+
+/**
+ * 確認テンプレートを送信
+ */
+function goConfirm(data){
     var postData = {
         "replyToken" : data.events[0].replyToken,
         "messages" : [
@@ -190,7 +224,10 @@ function doPost(event) {
         case "こんびに":
         case "つるは":
         case "からおけ":
-            goTo(json);
+            goConfirm(json);
+            break;
+        case "こまんど":
+            command(json);
             break;
         default:
             //sameReply(json);
