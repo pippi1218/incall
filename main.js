@@ -62,15 +62,15 @@ function piyoReply(data){
 }
 
 /**
- * 「痩せろ」を送信する
+ * 「にちゃあ」を送信する
  */
-function yaseroReply(data){
+function nichaReply(data){
     var postData = {
         "replyToken" : data.events[0].replyToken,
         "messages" : [
             {
                 'type':'text',
-                'text':"痩せろ"
+                'text':"にちゃあ"
             }
         ]　
     };
@@ -117,6 +117,47 @@ function kakkoiReply(data){
     return UrlFetchApp.fetch(url, options);
 }
 
+function goTo(data){
+    var postData = {
+        "replyToken" : data.events[0].replyToken,
+        "messages" : [
+            {
+                "type": "template",
+                "altText": "this is a confirm template",
+                "template": {
+                    "type": "confirm",
+                    "text": "行く？",
+                    "actions": [
+                        {
+                          "type": "message",
+                          "label": "はい",
+                          "text": "行く！"
+                        },
+                        {
+                          "type": "message",
+                          "label": "いいえ",
+                          "text": "行かない！"
+                        }
+                    ]
+                }
+              }
+        ]　
+    };
+
+    var headers = {
+        "Content-Type" : "application/json; charset=UTF-8",
+        'Authorization': 'Bearer ' + LINE_TOKEN,
+    };
+
+    var options = {
+        "method" : "post",
+        "headers" : headers,
+        "payload" : JSON.stringify(postData)
+    };
+
+    return UrlFetchApp.fetch(url, options);
+}
+
 
 /**
 * postされたときの処理
@@ -126,21 +167,33 @@ function doPost(event) {
     var userMessage = json.events[0].message.text; //受信したメッセージ内容
     
     switch (userMessage){
-        case "ぴーすけ"　:
+        case "いんこーる"　:
             piyoReply(json);
             break;
-        case "ぴこ":
+        case "なきごえ":
             piyoReply(json);
             break;
-        case "まま":
-        case "留美子":
-            yaseroReply(json);
+        case "やまぐちたくま":
+        case "やまぐち":
+        case "たくま":
+        case "山口拓真":
+        case "山口":
+        case "拓真":
+        case "りす":
+        case "risu":
+        case "risu1019":
+            nichaReply(json);
             break;
-        case "まちゃぴろ":
+        case "はるき":
             kakkoiReply(json);
             break;
+        case "こんびに":
+        case "つるは":
+        case "からおけ":
+            goTo(json);
+            break;
         default:
-            sameReply(json);
+            //sameReply(json);
             break;
     }
 
