@@ -1,2 +1,3 @@
 # incall
-LINEbot
+メッセージに対して返信を行うLINEbot
+
