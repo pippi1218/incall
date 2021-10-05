@@ -9,13 +9,13 @@ var url = "https://api.line.me/v2/bot/message/reply";
  * コマンド一覧を表示
  */
 function command(data) {
-    
+
     var postData = {
         "replyToken" : data.events[0].replyToken,
         "messages" : [
             {
                 'type':'text',
-                'text':"●コマンド一覧\nいんこーる\nこんびに\nつるは\nからおけ\nてんき"
+                'text':"●コマンド一覧\nこんびに\nつるは\nからおけ\nてんき"
             }
         ]　
     };
@@ -39,7 +39,7 @@ function command(data) {
 * 同じメッセージを送信する
 */
 function sameReply(data) {
-    
+
     var postData = {
         "replyToken" : data.events[0].replyToken,
         "messages" : [
@@ -73,15 +73,14 @@ function weatherForecast(data) {
     var strBody = "☆" + json["location"]["city"] + "の天気☆"+ "\n";
     strBody += "●今日の天気： " + json["forecasts"][0]["telop"] + "\n";
     strBody += "●最高気温:  " + json["forecasts"][0]["temperature"]["max"]["celsius"] + "℃" + "\n";
-    strBody += "●明日の天気： " + json["forecasts"][1]["telop"] + "\n";
-    strBody += json["description"]["publicTime_format"]+"の情報です！";
+    strBody += "●明日の天気： " + json["forecasts"][1]["telop"];
 
     Reply(data,strBody);
 }
 
   // LINE送信処理
 function Reply(data,text) {
-    
+
     var postData = {
         "replyToken" : data.events[0].replyToken,
         "messages" : [
@@ -157,7 +156,7 @@ function goConfirm(data){
 function doPost(event) {
     var json = JSON.parse(event.postData.contents); //LINEからWebhook（HTTPリクエスト）で送られてきたデータ(JSON形式)を変換
     var userMessage = json.events[0].message.text; //受信したメッセージ内容
-    
+
     switch (userMessage){
         case "こんびに":
         case "つるは":
@@ -171,7 +170,7 @@ function doPost(event) {
             command(json);
             break;
         default:
-            sameReply(json);
+            //sameReply(json);
             break;
     }
 }
