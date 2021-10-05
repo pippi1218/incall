@@ -72,7 +72,6 @@ function weatherForecast(data) {
     /* 通知されるメッセージ　　他に欲しい情報があったら追加する。 */
     var strBody = "☆" + json["location"]["city"] + "の天気☆"+ "\n";
     strBody += "●今日の天気： " + json["forecasts"][0]["telop"] + "\n";
-    strBody += "●最高気温:  " + json["forecasts"][0]["temperature"]["max"]["celsius"] + "℃" + "\n";
     strBody += "●明日の天気： " + json["forecasts"][1]["telop"];
 
     Reply(data,strBody);
