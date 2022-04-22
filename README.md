@@ -1,2 +1,2 @@
 # incall
-メッセージに対して返信を行うLINEbot
+コンビニに友達と行くためのLINEbot
